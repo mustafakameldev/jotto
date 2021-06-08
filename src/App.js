@@ -1,23 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Congrats from './Congrats';
+import GuessedWords from './guessedWord';
+import Input from './input';
 function App() {
+  // TODO: get props from shared state
+  const success = false;
+  const secretWord = 'party';
+  const guessedWords = [];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container" data-test="component-app">
+      <h1>Jotto</h1>
+      <Congrats success={true} />
+      <Input success={success} secretWord={secretWord} />
+      <GuessedWords guessedWords={guessedWords} />
     </div>
   );
 }

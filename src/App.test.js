@@ -1,12 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import { mount } from 'enzyme';
-import { findByTestAttr } from '../test/testUtils';
+import { findByTestAttr, storeFactory } from '../test/testUtils';
+import { Provider } from 'react-redux';
 import App from './App';
 //activate global mock to make sure getSecretWord doesn't make network call
 jest.mock('./acions');
 import { getSecretWord as mockGetSecretWord } from './acions';
-const setup = () => {
-  return mount(<App />);
+const setup = (initialState = {}) => {
+  const store = storeFactory(initialState);
+  return mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 };
 test('renders without errors', () => {
   const wrapper = setup();

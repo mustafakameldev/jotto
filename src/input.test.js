@@ -1,21 +1,27 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React, { useState } from 'react';
 import Input from './input';
-import { checkProps, findByTestAttr } from '../test/testUtils';
+import { checkProps, findByTestAttr, storeFactory } from '../test/testUtils';
+import { Provider } from 'react-redux';
 // mock entire module for distructuring use state om import
 const mockSetCurrentGuess = jest.fn();
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useState: (initialState) => [initialState, mockSetCurrentGuess],
 }));
-const setup = (success = false, secretWord = 'party') => {
-  return shallow(<Input secretWord={secretWord} success={success} />);
+const setup = (initialState = {}, secretWord = 'party') => {
+  const store = storeFactory(initialState);
+  return mount(
+    <Provider store={store}>
+      <Input secretWord={secretWord} />
+    </Provider>
+  );
 };
 describe('render', () => {
   describe('success is true ', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = setup(true);
+      wrapper = setup({ success: true });
     });
     test('render without errors', () => {
       const component = findByTestAttr(wrapper, 'component-input');
@@ -34,7 +40,7 @@ describe('render', () => {
 describe('success if false ', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = setup(false);
+    wrapper = setup({ success: false });
   });
   test('render without errors', () => {
     const component = findByTestAttr(wrapper, 'component-input');
@@ -54,7 +60,7 @@ test('does not throw warning with expected props', () => {
   checkProps(Input, { secretWord: 'party' });
 });
 describe('state  controlled input field', () => {
-  let wrapper = setup();
+  let wrapper = setup({ success: false });
   let originalUseState;
   beforeEach(() => {
     mockSetCurrentGuess.mockClear();

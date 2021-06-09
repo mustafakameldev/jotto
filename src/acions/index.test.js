@@ -1,12 +1,12 @@
 import moxios from 'moxios';
-import { getSecretWord, correctGuess, actionTypes } from './';
+import { getSecretWord } from './';
 
-describe('correctGuess', () => {
-  test("returns an action with type   'CREECT_GUESS'", () => {
-    const action = correctGuess();
-    expect(action).toStrictEqual({ type: actionTypes.COREECT_GUESS });
-  });
-});
+// describe('correctGuess', () => {
+//   test("returns an action with type   'CREECT_GUESS'", () => {
+//     const action = correctGuess();
+//     expect(action).toStrictEqual({ type: actionTypes.COREECT_GUESS });
+//   });
+// });
 describe(' getSecretWord', () => {
   beforeEach(() => {
     moxios.install();

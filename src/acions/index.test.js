@@ -1,21 +1,17 @@
 import moxios from 'moxios';
+
+import { storeFactory } from '../../test/testUtils';
 import { getSecretWord } from './';
 
-// describe('correctGuess', () => {
-//   test("returns an action with type   'CREECT_GUESS'", () => {
-//     const action = correctGuess();
-//     expect(action).toStrictEqual({ type: actionTypes.COREECT_GUESS });
-//   });
-// });
-describe(' getSecretWord', () => {
+describe('getSecretWord', () => {
   beforeEach(() => {
     moxios.install();
   });
   afterEach(() => {
     moxios.uninstall();
   });
-
-  test('secret word is returned', () => {
+  test('secretWord is returned', () => {
+    const store = storeFactory();
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -24,8 +20,8 @@ describe(' getSecretWord', () => {
       });
     });
 
-    // update to test app in redux
-    return getSecretWord().then((secretWord) => {
+    return store.dispatch(getSecretWord()).then(() => {
+      const secretWord = store.getState().secretWord;
       expect(secretWord).toBe('party');
     });
   });

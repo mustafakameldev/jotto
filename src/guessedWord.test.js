@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Provider } from 'react-redux';
 import { findByTestAttr, checkProps } from '../test/testUtils';
 import GuessedWords from './guessedWord';
 const defaultProps = {
